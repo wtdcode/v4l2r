@@ -1,5 +1,5 @@
 use std::env::{self, VarError};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 include!("bindgen.rs");
 
@@ -15,6 +15,21 @@ const WRAPPER_H: &str = "v4l2r_wrapper.h";
 
 // Fix for https://github.com/rust-lang/rust-bindgen/issues/753
 const FIX753_H: &str = "fix753.h";
+
+fn print_cc(cc: &Path, args: &[&str]) -> String {
+    let out = std::process::Command::new(cc.to_str().expect("utf-8?"))
+        .args(args)
+        .output()
+        .expect("fail to run cc");
+    if !out.status.success() {
+        panic!(
+            "sysroot not found with {} with {:?}",
+            String::from_utf8_lossy(&out.stderr),
+            args
+        );
+    }
+    String::from_utf8(out.stdout).expect("non utf-8?!")
+}
 
 fn main() {
     let videodev2_h_path = env::var(V4L2R_VIDEODEV_ENV)
@@ -34,12 +49,14 @@ fn main() {
     println!("cargo::rerun-if-changed={}", FIX753_H);
     println!("cargo::rerun-if-changed={}", WRAPPER_H);
 
+    let cc = cc::Build::new().get_compiler();
+
+    let cc_sysroot = print_cc(cc.path(), &["--print-sysroot"]).trim().to_string();
+
     let clang_args = [
         format!("-I{}", videodev2_h_path),
-        #[cfg(all(feature = "arch64", not(feature = "arch32")))]
-        "--target=x86_64-linux-gnu".into(),
-        #[cfg(all(feature = "arch32", not(feature = "arch64")))]
-        "--target=i686-linux-gnu".into(),
+        format!("--sysroot={}", &cc_sysroot),
+        format!("-I{}/usr/include/linux", &cc_sysroot),
     ];
 
     let bindings = v4l2r_bindgen_builder(bindgen::Builder::default())
