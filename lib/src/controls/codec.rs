@@ -12,7 +12,7 @@ use crate::bindings::v4l2_ctrl_h264_scaling_matrix;
 use crate::bindings::v4l2_ctrl_h264_slice_params;
 use crate::bindings::v4l2_ctrl_h264_sps;
 use crate::bindings::v4l2_ctrl_vp8_frame;
-use crate::bindings::v4l2_ctrl_vp9_frame;
+// use crate::bindings::v4l2_ctrl_vp9_frame;
 use crate::controls::ExtControlTrait;
 
 bitflags! {
@@ -127,11 +127,11 @@ impl ExtControlTrait for Vp8Frame {
     type PAYLOAD = v4l2_ctrl_vp8_frame;
 }
 
-pub struct Vp9Frame;
-impl ExtControlTrait for Vp9Frame {
-    const ID: u32 = bindings::V4L2_CID_STATELESS_VP9_FRAME;
-    type PAYLOAD = v4l2_ctrl_vp9_frame;
-}
+// pub struct Vp9Frame;
+// impl ExtControlTrait for Vp9Frame {
+//     const ID: u32 = bindings::V4L2_CID_STATELESS_VP9_FRAME;
+//     type PAYLOAD = v4l2_ctrl_vp9_frame;
+// }
 
 /// Safe wrapper over [`v4l2r::bindings::V4L2_CID_MPEG_VIDEO_HEADER_MODE`]
 #[repr(i32)]

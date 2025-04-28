@@ -65,10 +65,10 @@ use paste::paste;
 use std::marker::PhantomData;
 
 use crate::bindings;
-use crate::bindings::v4l2_ctrl_av1_film_grain;
-use crate::bindings::v4l2_ctrl_av1_frame;
-use crate::bindings::v4l2_ctrl_av1_sequence;
-use crate::bindings::v4l2_ctrl_av1_tile_group_entry;
+// use crate::bindings::v4l2_ctrl_av1_film_grain;
+// use crate::bindings::v4l2_ctrl_av1_frame;
+// use crate::bindings::v4l2_ctrl_av1_sequence;
+// use crate::bindings::v4l2_ctrl_av1_tile_group_entry;
 use crate::bindings::v4l2_ctrl_fwht_params;
 use crate::bindings::v4l2_ctrl_h264_decode_params;
 use crate::bindings::v4l2_ctrl_h264_pps;
@@ -76,13 +76,13 @@ use crate::bindings::v4l2_ctrl_h264_pred_weights;
 use crate::bindings::v4l2_ctrl_h264_scaling_matrix;
 use crate::bindings::v4l2_ctrl_h264_slice_params;
 use crate::bindings::v4l2_ctrl_h264_sps;
-use crate::bindings::v4l2_ctrl_hevc_decode_params;
-use crate::bindings::v4l2_ctrl_hevc_pps;
-use crate::bindings::v4l2_ctrl_hevc_scaling_matrix;
-use crate::bindings::v4l2_ctrl_hevc_slice_params;
-use crate::bindings::v4l2_ctrl_hevc_sps;
+// use crate::bindings::v4l2_ctrl_hevc_decode_params;
+// use crate::bindings::v4l2_ctrl_hevc_pps;
+// use crate::bindings::v4l2_ctrl_hevc_scaling_matrix;
+// use crate::bindings::v4l2_ctrl_hevc_slice_params;
+// use crate::bindings::v4l2_ctrl_hevc_sps;
 use crate::bindings::v4l2_ctrl_vp8_frame;
-use crate::bindings::v4l2_ctrl_vp9_frame;
+// use crate::bindings::v4l2_ctrl_vp9_frame;
 use crate::bindings::v4l2_ext_control;
 use crate::bindings::v4l2_ext_control__bindgen_ty_1;
 use crate::controls::codec::FwhtFlags;
@@ -283,11 +283,28 @@ macro_rules! wrap_both {
     };
 }
 
+// wrap_both!(
+//     av1_film_grain,
+//     av1_frame,
+//     av1_sequence,
+//     av1_tile_group_entry,
+//     fwht_params,
+//     h264_decode_params,
+//     h264_pred_weights,
+//     h264_pps,
+//     h264_scaling_matrix,
+//     h264_slice_params,
+//     h264_sps,
+//     hevc_decode_params,
+//     hevc_pps,
+//     hevc_scaling_matrix,
+//     hevc_slice_params,
+//     hevc_sps,
+//     vp8_frame,
+//     vp9_frame
+// );
+
 wrap_both!(
-    av1_film_grain,
-    av1_frame,
-    av1_sequence,
-    av1_tile_group_entry,
     fwht_params,
     h264_decode_params,
     h264_pred_weights,
@@ -295,11 +312,5 @@ wrap_both!(
     h264_scaling_matrix,
     h264_slice_params,
     h264_sps,
-    hevc_decode_params,
-    hevc_pps,
-    hevc_scaling_matrix,
-    hevc_slice_params,
-    hevc_sps,
-    vp8_frame,
-    vp9_frame
+    vp8_frame
 );
